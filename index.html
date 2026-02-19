@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0"
+    />
+    <title>One Platform Complete Healthcare</title>
+    <!-- Simple landing that redirects to login. This file is cached by the service worker. -->
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body class="landing-body">
+    <header class="app-header" style="margin-bottom:16px;">
+      <div style="display:flex;align-items:center;justify-content:space-between;max-width:900px;margin:0 auto;padding:0 16px;">
+        <div>
+          <!-- Title moved to landing container for prominent display -->
+        </div>
+        <div class="status-wrapper">
+          <select id="languageSelect" class="language-select"></select>
+        </div>
+      </div>
+    </header>
+
+    <div class="landing-container">
+      <h1 class="app-title" data-i18n="appTitle">One Platform Complete Healthcare</h1>
+      <p class="app-subtitle" data-i18n="appSubtitle">
+        Simple offline healthcare access for rural India.
+      </p>
+      <a href="login.html" class="btn primary-btn large-btn" data-i18n="enterBtn">
+        Enter / प्रवेश करें
+      </a>
+    </div>
+
+    <script src="app.js"></script>
+
+    <script>
+      // If already logged in, go directly to dashboard
+      (function () {
+        try {
+          const currentUser = localStorage.getItem("hc_current_user");
+          if (currentUser) {
+            window.location.replace("dashboard.html");
+          } else {
+            // Ensure we still register the service worker from the first page
+            if ("serviceWorker" in navigator) {
+              navigator.serviceWorker
+                .register("service-worker.js")
+                .catch(console.error);
+            }
+          }
+        } catch (e) {
+          console.warn("Unable to check session", e);
+        }
+      })();
+    </script>
+    <!-- Google Translate widget removed -->
+  </body>
+  </html>
+
